@@ -1,0 +1,52 @@
+GET request - returns all students without country of birth
+curl -v http://localhost:8080/api/v1/student
+
+GET returns all fields of specifies students including country of birth
+http://localhost:8080/api/v1/student/2
+curl -v http://localhost:8080/api/v1/student/2
+
+POST request --creating student
+without country
+curl -v -X POST -H 'Content-Type: application/json' -i http://localhost:8080/api/v1/student --data '{"firstName":"Andris 2", "lastName":"Berzins 2", "email":"Andris2.Berzins2@gmail.com", "dob":"1995-12-17"}'
+with country
+curl -v -X POST -H 'Content-Type: application/json' -i http://localhost:8080/api/v1/student --data '{"firstName":"Andris 4", "lastName":"Berzins 4", "email":"Andris4.Berzins4@gmail.com", "dob":"1995-12-17","birthCountry":{"id":2}}'
+with country and details
+curl -v -X POST -H 'Content-Type: application/json' -i http://localhost:8080/api/v1/student --data '{"firstName":"Andris 4", "lastName":"Berzins 4", "email":"Andris4.Berzins4@gmail.com", "dob":"1995-12-17","birthCountry":{"id":2}, "details":{"description":"Details of Andris"}}'
+with country, images 
+curl -v -X POST -H 'Content-Type: application/json' -i http://localhost:8080/api/v1/student --data '{"firstName":"Andris 4", "lastName":"Berzins 4", "email":"Andris4.Berzins4@gmail.com", "dob":"1995-12-17","birthCountry":{"id":2},"images":[{"filename":"Andris Image1"},{"filename":"Andris Image2"}]}'
+student with id, with other student's images (id of image is set)
+curl -v -X POST -H 'Content-Type: application/json' -i http://localhost:8080/api/v1/student --data '{"id":5,"firstName":"Andris 4 upd", "lastName":"Berzins 4 upd", "email":"Andris4.Berzins4 upd@gmail.com", "dob":"1995-12-17","birthCountry":{"id":1},"images":[{"id":1,"filename":"Andris Image1"},{"id":2,"filename":"Andris Image2"}]}'
+
+
+
+PUT request --updating student 
+(by request body)
+curl -v -X PUT -H 'Content-Type: application/json' -i http://localhost:8080/api/v1/student --data '{"id":1,"firstName":"JurisUpdated2","lastName":"Berzins 4 upd", "email":"JurisUpdated2.Surname@gmail.com","dob":"1982-10-12","age":39}'
+setting new country, setting no images
+curl -v -X PUT -H 'Content-Type: application/json' -i http://localhost:8080/api/v1/student --data '{"id":5,"firstName":"Andris 4 upd", "lastName":"Berzins 4 upd", "email":"Andris4.Berzins4 upd@gmail.com", "dob":"1995-12-17","birthCountry":{"id":1}}'
+setting new country, setting new images
+curl -v -X PUT -H 'Content-Type: application/json' -i http://localhost:8080/api/v1/student --data '{"id":5,"firstName":"Andris 4 upd", "lastName":"Berzins 4 upd", "email":"Andris4.Berzins4 upd@gmail.com", "dob":"1995-12-17","birthCountry":{"id":1},"images":[{"filename":"Andris Image1"},{"filename":"Andris Image2"}]}'
+
+(by get attribytes)
+curl -X PUT -i 'http://localhost:8080/api/v1/student/1?firstName=JurisUpdate&email=JurisUpdated2.Surname@gmail.com'
+
+DELETE request --deleting student
+curl -X DELETE -i http://localhost:8080/api/v1/student/1
+
+
+
+POST request --adding image to student
+curl -X POST -H 'Content-Type: application/json' -i http://localhost:8080/api/v1/student/1/images --data '{"filename":"Image 3"}'
+
+DELETE request --delete students image
+curl -X DELETE -i http://localhost:8080/api/v1/student/1/images/2
+
+
+GET returns all countries
+http://localhost:8080/api/v1/student/countries
+
+GET returns id, name of specified country
+http://localhost:8080/api/v1/student/countries/2
+
+GET returns all students of specified country
+http://localhost:8080/api/v1/student/countries/2/students
